@@ -1,0 +1,348 @@
+#========SHOW DATABASES==========1
+
+SHOW DATABASES;
+
+
+#================================2
+
+CREATE DATABASE shop;
+SHOW DATABASES;
+# show databases; --> 
+
+
+#================================3
+
+
+CREATE DATABASE shop; # --> Already exists
+
+
+#================================4
+
+
+CREATE DATABASE IF NOT EXISTS shop;
+
+
+#================================5
+
+
+DROP DATABASE shop;
+SHOW DATABASES;
+
+
+#================================6
+
+
+DROP DATABASE shop; #--> not found
+DROP DATABASE IF EXISTS shop;
+
+
+#================================7
+
+
+CREATE DATABASE IF NOT EXISTS my shop; # Error
+
+
+#===
+1) step 1
+CREATE DATABASE IF NOT EXISTS my_shop;
+SHOW DATABASES;
+2) step 2
+CREATE DATABASE IF NOT EXISTS `my shop`;
+SHOW DATABASES;
+#========
+DROP DATABASE IF EXISTS my_shop;
+DROP DATABASE IF EXISTS `my shop`;
+SHOW DATABASES;
+
+
+#======================TABLE===================
+
+CREATE TABLE IF NOT EXISTS customer(
+	nic VARCHAR(45),
+	name VARCHAR(45),
+	address VARCHAR(45),
+	salary DOUBLE
+);
+
+
+#========================= we must use a database=
+CREATE DATABASE IF NOT EXISTS shop;
+SHOW DATABASES;
+USE shop; # (we must create a database before we access the database)
+
+
+#==========================
+CREATE TABLE IF NOT EXISTS customer(
+	nic VARCHAR(45),
+	name VARCHAR(45),
+	address VARCHAR(45),
+	salary DOUBLE
+);
+
+
+#=========================
+SHOW TABLES;
+#=========================
+DESCRIBE customer;
+DESC customer;
+
+
+#=============
+CREATE TABLE IF NOT EXISTS user(
+	name VARCHAR(5),
+	password VARCHAR(10)
+);
+SHOW TABLES;
+DESC user;
+
+
+#================ Insert data ==========
+
+
+#====> ways 3===>
+
+#1)-->
+INSERT INTO user(name,password) VALUES('nimal','1234');
+SELECT * FROM user;
+#==============#==== we must consider the order
+INSERT INTO user(password,name) VALUES('kamal','1234');
+SELECT * FROM user;
+#==============
+
+
+#2)-->
+#==================> error data too long => name (max length==5)
+INSERT INTO user VALUES('jagath','450');
+SELECT * FROM user;
+#=======
+INSERT INTO user VALUES('jaga','450');
+SELECT * FROM user;
+#==============#==== we must consider the order
+INSERT INTO user VALUES('1235','nish');
+SELECT * FROM user;
+#==============
+
+
+#3)-->
+INSERT INTO user VALUES('abc','12'),('kama','452'),
+	('nama','875'),('wasa','7825'),('pama','542');
+SELECT * FROM user;
+
+
+
+#======================ALTER===============
+#==> how to add a column?
+ALTER TABLE user ADD email VARCHAR(45);
+DESC user;
+SELECT * FROM user;
+
+#=================***** just forget it
+UPDATE user SET email='nimal@';
+SELECT * FROM user;
+
+#=================***** just forget it
+#==> how to rename a table Name?
+ALTER TABLE user RENAME TO seller;
+SHOW TABLES;
+SELECT * FROM seller;
+
+
+#==============
+#==> how to rename a Column Name?
+ALTER TABLE seller CHANGE COLUMN email my_email VARCHAR(45); 
+SELECT * FROM seller;
+
+#==============
+#==> how to drop a column?
+ALTER TABLE seller DROP COLUMN my_email;
+SELECT * FROM seller;
+
+
+#==================
+#===================DROP & DELETE & TRUNCATE =======================
+#==> DROP (table,database)
+#==> DELETE (records)(with a logic)
+# TRUNCATE (records)
+
+# DELETE
+DELETE FROM seller WHERE name ='nimal'; #====> 
+SELECT * FROM seller;
+
+# TRUNCATE
+TRUNCATE seller;
+SELECT * FROM seller; #====>
+
+# DROP
+DROP TABLE seller;
+SHOW TABLES;
+
+DROP DATABASE shop;
+#===============================
+=================TABLE CONSTRAINTS================
+* PRIMARY KEY
+* NOT NULL
+* CHECK
+* DEFAULT
+* UNIQUE
+* FOREIGN KEY
+#==============>
+
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE IF NOT EXISTS shop;
+SHOW DATABASES;
+USE shop;
+
+
+#--------------
+#===== PRIMARY KEY ======
+CREATE TABLE user(
+	name VARCHAR(15),
+	password VARCHAR(15)
+);
+SHOW TABLES;
+DESCRIBE user;
+
+
+#============
+INSERT INTO user VALUES('nimal','123'),('kamal','456'),
+	('jagath','789');
+SELECT * FROM user;
+
+
+#==============
+Step 1=>
+UPDATE user SET password='753'; #==> *****
+SELECT * FROM user;
+
+step 2=> 
+UPDATE user SET password='456' WHERE name='jagath';
+SELECT * FROM user;
+
+INSERT INTO user VALUES('jagath','789');
+SELECT * FROM user;
+
+step 3=> 
+UPDATE user SET password='754' WHERE name='jagath';
+SELECT * FROM user;
+
+#==== then we will use the primary key option=======
+
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE IF NOT EXISTS shop;
+SHOW DATABASES;
+USE shop;
+#------------
+CREATE TABLE user(
+	nic VARCHAR(15) PRIMARY KEY,
+	name VARCHAR(15),
+	password VARCHAR(15)
+);
+SHOW TABLES;
+DESCRIBE user;
+#=== PRYMARY KEY===========
+
+1)==> no duplicats
+INSERT INTO user VALUES('95','Kamal','123');
+SELECT * FROM user;
+INSERT INTO user VALUES('95','jagath','456'); # Error
+
+2)==> no null values (default--> no null aplied)
+INSERT INTO user VALUES(null,'kamal','789');# NO
+INSERT INTO user VALUES(NULL,'kamal','789');# NO
+INSERT INTO user VALUES('45',NULL,'789');
+SELECT * FROM user;
+INSERT INTO user VALUES('null','kamal','789');
+SELECT * FROM user;
+INSERT INTO user VALUES('','kamal','789');
+SELECT * FROM user;
+
+#=============NOT NULL=============
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE IF NOT EXISTS shop;
+SHOW DATABASES;
+USE shop;
+#------------
+#------------
+CREATE TABLE user(
+	nic VARCHAR(15) PRIMARY KEY,
+	name VARCHAR(15) NOT NULL,
+	password VARCHAR(15)
+);
+SHOW TABLES;
+DESCRIBE user;
+
+
+INSERT INTO user VALUES('95',NULL,'123');
+INSERT INTO user VALUES('95','kamal','123');
+SELECT * FROM user;
+
+#=================UNIQUE===============
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE IF NOT EXISTS shop;
+SHOW DATABASES;
+USE shop;
+#------------
+#------------
+CREATE TABLE user(
+	nic VARCHAR(15) PRIMARY KEY,
+	name VARCHAR(15) NOT NULL,
+	email VARCHAR(45) UNIQUE,
+	password VARCHAR(15)
+);
+SHOW TABLES;
+DESCRIBE user;
+
+INSERT INTO user VALUES('95','nimal','nimal@','123');
+SELECT * FROM user;
+
+INSERT INTO user VALUES('96','kamal','nimal@','456');#
+INSERT INTO user VALUES('96','kamal',null,'456');
+SELECT * FROM user;
+INSERT INTO user VALUES('96','kamal',null,'456');
+
+#============= we can use more than one constraints at once
+CREATE TABLE user(
+	nic VARCHAR(15) PRIMARY KEY,
+	name VARCHAR(15) NOT NULL,
+	email VARCHAR(45) UNIQUE NOT NULL,
+	password VARCHAR(15)
+);
+#==============DEFAULT=============
+
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE IF NOT EXISTS shop;
+SHOW DATABASES;
+USE shop;
+#------------
+#------------
+CREATE TABLE user(
+	nic VARCHAR(15) PRIMARY KEY,
+	name VARCHAR(15) NOT NULL,
+	email VARCHAR(45) UNIQUE,
+	salary DOUBLE DEFAULT(10.0),
+	password VARCHAR(15)
+);
+SHOW TABLES;
+DESCRIBE user;
+
+
+INSERT INTO user(nic,name,email,password)
+ VALUES('95','kamal','kamal@','123');
+SELECT * FROM user;
+
+INSERT INTO user(name,email,password)
+ VALUES('kamal','kamal@','123'); => prymary key not accept null
+
+INSERT INTO user(nic,name,email)
+ VALUES('96','bimal','bimal@');
+SELECT * FROM user;
+
+INSERT INTO user(nic,name)
+ VALUES('97','wasanatha');
+SELECT * FROM user;
+
+
+
+
+#==============AUTO_INCREMENT=============
+

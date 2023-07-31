@@ -1,0 +1,120 @@
+===========================================================================
+clear screen
+
+===========================================================================
+Types
+
+
+CREATE TYPE dept_Type
+/
+
+CREATE TYPE employee_type AS OBJECT(
+
+    empno char(6),
+    firstName varchar(12),
+    lastName varchar(15),
+    workDept REF dept_Type,
+    sex char(1),
+    birthDate date,
+    salary number(8,2)
+
+    
+)
+/
+
+
+CREATE TYPE dept_Type AS OBJECT(
+
+    deptNo char(3),
+    deptName varchar(36),
+    mgrNo REF employee_Type,
+    admrDept REF dept_Type
+    
+    
+)
+/
+
+desc dept_Type
+
+desc employee_Type
+
+
+
+===============================================================================
+Tables
+
+
+CREATE TABLE employee_Table OF employee_Type(
+
+CONSTRAINT tblemp_primarykey PRIMARY KEY (empno),
+CONSTRAINT tblemp_fname firstName NOT NULL,
+CONSTRAINT tblemp_lname lastName NOT NULL,
+CONSTRAINT tblemp_check_sex CHECK (sex='M' OR sex='F' OR sex='m' OR sex='f')
+
+)
+/
+
+
+
+
+
+CREATE TABLE department_Table OF dept_Type(
+
+
+CONSTRAINT tbldept_primarykey PRIMARY KEY (deptNo),
+CONSTRAINT tbldept_dname deptName NOT NULL,
+CONSTRAINT tbldept_mgrno_fk FOREIGN KEY (mgrNO) REFERENCES employee_Table,
+CONSTRAINT tbldept_admin_fk FOREIGN KEY (admrDept) REFERENCES department_Table,
+CONSTRAINT tbldept_deptno deptNo NOT NULL
+
+
+)
+/
+
+
+//Update Table Constraint
+
+ALTER TABLE employee_Table ADD CONSTRAINT tblemp_workdept_fk FOREIGN KEY (workDept) REFERENCES department_Table
+
+
+
+
+=================================================================================
+Enter Values
+
+
+//Department table
+
+INSERT INTO department_Table VALUES (dept_Type('A00','SPIFFY',NULL,NULL))
+
+INSERT INTO department_Table VALUES (dept_Type('A01','SPIPPY',NULL,NULL))
+
+INSERT INTO department_Table VALUES (dept_Type('B01','PLANING',NULL,(SELECT REF(d) FROM department_Table d WHERE d.deptNo='A00')))
+
+
+
+UPDATE department_Table d
+SET d.admrDept =(
+
+SELECT REF(d) FROM department_Table d
+WHERE d.deptNo='A00'
+)WHERE d.deptNo='A00'
+
+
+
+//Employee table
+
+INSERT INTO employee_Table VALUES(employee_type('000010','CHRISTINE','HAAS',(SELECT REF(d) FROM department_Table d WHERE d.deptNo='A00'),'F','14-AUG-53','72750'))
+
+/
+
+
+
+
+
+
+
+
+
+
+
