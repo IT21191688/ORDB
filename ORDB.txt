@@ -1,0 +1,116 @@
+//Oracle database
+
+=====================================
+Commands
+
+desc table-name; //view Structure of table
+
+cl scr //clear screen
+
+==============Advantages=============
+
+*Data retrival
+*sequrity
+*data ridundant
+*data intigrity
+\*Indexing
+
+=====================================
+
+Table= Store the Information
+
+View= Logically seperated subset of data from one or more table or View
+
+Sequence= Used to generate primary key value
+
+Index= Used to improve performance of quary
+
+Synonims= Used to give alternate name to Object
+
+=====================================
+
+Data Types
+
+String ---- CHAR(Size),VARCHAR(Size),NCHAR(Size)
+
+Numeric---- number(p,s)//pression //scale number(5,2)
+
+Date ---- Datetime
+
+Lob ---- CLOB,BLOB,BFILE
+
+=====================================
+
+rules of create table
+
+*unique name
+*length of table name maximum 30 characters
+*table can contain 1000 collums unlimited records
+*attribute table must be unique
+\*can use char number \_ can't use # $
+
+=====================================
+
+SQL
+
+structured quarry language
+
+oracle,mysql,microsoft etc
+
+====================================
+
+Sql can divide 5 category
+
+1. DDL(Data Definition language)
+
+CTRATE,DROP,TRUNCATE,ALTER,RENAME
+
+2. DML(DATA manipulation language)
+
+INSERT,UPDATE,DELETE
+
+3. DQL(DATA quarry language)
+
+SELECT
+
+4. DCL(DATA control language)
+
+GRHNT,REVOKE
+
+5. TCL(Transaction control language)
+
+Commit,rollback,save,point
+
+=====================================
+
+DDL
+
+//create table
+
+Create table table-name (Eid Number,Ename Varchar(30));
+
+//rename table
+
+rename table-name to new-name;
+
+//alter add row
+
+ALTER TABLE table-name ADD column-name data-type;
+
+//TRUNCATE (Delete all data wihtout deleting Table)
+
+TRUNCATE TABLE table-name;
+
+//Drop
+
+drop table table-name;
+
+========================================
+
+//Diffrence between truncate and drop
+
+\*truncate delete only records only
+
+\*drop delete all the table data and table structure also
+
+========================================
