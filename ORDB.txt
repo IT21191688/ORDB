@@ -5,7 +5,9 @@ Commands
 
 desc table-name; //view Structure of table
 
+conn //connect database
 cl scr //clear screen
+username system;
 
 ==============Advantages=============
 
@@ -114,3 +116,122 @@ drop table table-name;
 \*drop delete all the table data and table structure also
 
 ========================================
+
+DML
+
+//insert command
+
+insert into table-name values(2,'bla bla');
+
+//update command
+
+update table-name set field-name=value where field-name=references-data
+update st set sname='amal' where sid=1;
+
+//Delete command
+
+delete from st where condition;
+
+
+========================================
+
+DQL
+
+//Select command
+
+select * from table-name;
+
+select * from table-name where condition;
+
+
+========================================
+
+TCL Commands(Transaction control language)
+
+
+//Commit
+
+commit; //it save all data oracle database
+
+
+//rollback
+
+rollback;  //  last insert remove get previous version
+
+
+//savepoint
+
+savepoint A;(save point name)//save initial point
+
+rollback to A;
+
+
+=======================================
+
+where clause
+
+where use select ,delete or update
+
+
+//select
+
+eg. select * from table-name where condition;
+
+
+//update
+
+eg. update table-name set name="value" where condition;
+
+
+//delete 
+
+eg. delete from table-name where condition;
+
+
+========================================
+
+
+//relational operators
+
+DISTINET,ALL,In,NOT IN,BETWEEN,LIKE,NOT LIKE
+
+
+DISTINET //Allows to retrive unique records of table
+eg. select distinct * from emp;
+
+
+ALL //Allows to retrive all the informations of the table
+eg. select all * from emp;
+
+
+IN //it is used to retrive more than one records
+eg. select * from emp where eid in(20,19,100);
+
+
+NOT IN //it is used to retrive unselected record of the table
+eg. select * from emp where eid not in(20,19,100);
+
+
+BETWEEN //it is used to retrive records of table between two ranges
+eg. select * from emp eid between 20 and 40;
+
+
+LIKE //like is used to retrive pattern vice data
+eg. select * from emp where ename like 'r%';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
