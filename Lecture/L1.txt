@@ -1,0 +1,87 @@
+
+//create object relational database
+
+=============================================
+create student type
+
+create type stud_t as object(sid Number,
+sname Varchar(30),
+gpa float)
+/
+
+=============================================
+student table
+
+create table student of stud_t
+/
+
+drop type stud_t force;
+
+
+=============================================
+insert data
+
+insert into student values(stud_t(1,
+'sadeepa',
+2.90))
+/
+
+select value(s) from student s;
+
+querry data
+
+
+/////////////////////////////////////////////////
+
+
+1 to many relation 
+
+
+=================================================
+create department
+
+create type dept_ty as object(
+    dno Number,
+    dname Varchar(20)
+)
+/
+
+create table departments of dept_ty(
+    dno primary key
+)
+/
+
+insert into departments values
+(dept_ty(1,'se'))
+/
+insert into departments values
+(dept_ty(2,'ds'))
+/
+
+
+================================================
+
+//create employee table
+
+
+create type emp_ty as object(
+eid Number,
+ename Varchar(20),
+addr Varchar(20),
+workdept REF dept_ty
+)
+/
+
+create table employees of emp_ty(
+    eid primary key
+)
+/
+
+insert into employees values(
+    emp_ty(1,'saman','coll',(select ref(d) from departments d where d.dno=1))
+)
+/
+
+select e.eid,e.ename,e.workdept.dname
+from employees e
+/

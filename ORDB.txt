@@ -219,6 +219,76 @@ eg. select * from emp eid between 20 and 40;
 LIKE //like is used to retrive pattern vice data
 eg. select * from emp where ename like 'r%';
 
+======================================
+
+//Set operator
+
+
+UNION, UNION ALL, INTERSECT, MINUS
+
+
+union //duplicate table
+eg. select * from stu1 union select * from stu2;
+
+
+UNION ALL //
+eg. select * from stu1 union all select * from stu2;
+
+
+INTERSECT //
+eg. select * from stu1 intersect select * from stu2;
+
+
+MINUS //
+eg. 
+
+
+========================================
+
+
+// SQL Alias
+
+sql alias is used to give a temporory name of table or collums
+
+*collum alias
+*table alias
+
+
+collum alias
+eg. select eincome as salary from emp;
+
+
+table alias
+eg. select collum-name from table-name as alias-name;
+
+
+
+=========================================
+
+
+//constraints
+
+//domain intigrity constraints
+1. default 
+2. NOT NULL
+3. Check
+
+//entity intigrity constraint
+1.unique key
+2.primary key
+
+
+//referencial intigrity constraint
+1.
+
+//18
+
+
+
+
+
+
+
 
 
 
